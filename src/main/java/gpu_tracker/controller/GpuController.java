@@ -1,8 +1,10 @@
 package gpu_tracker.controller;
 
+import gpu_tracker.dto.SoloTodoResponseDto;
 import gpu_tracker.model.Gpu;
 import gpu_tracker.repository.GpuRepository;
 import gpu_tracker.service.GpuService;
+import gpu_tracker.service.SoloTodoScrapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.List;
 public class GpuController {
 
     private final GpuService gpuService;
+    private final SoloTodoScrapperService soloTodoScrapperService;
+
 
     @PostMapping
     public ResponseEntity<Gpu> createGpu(@RequestBody Gpu gpu){
@@ -27,5 +31,11 @@ public class GpuController {
     public ResponseEntity<List<Gpu>> findAllGpu(){
         List<Gpu> gpuList = gpuService.findAll();
         return ResponseEntity.ok(gpuList);
+    }
+
+    @GetMapping("/test-scraping/{apiId}")
+    public ResponseEntity<SoloTodoResponseDto> testScraping(@PathVariable Long apiId) {
+       SoloTodoResponseDto response = soloTodoScrapperService.fetchGpuData(apiId);
+        return ResponseEntity.ok(response);
     }
 }

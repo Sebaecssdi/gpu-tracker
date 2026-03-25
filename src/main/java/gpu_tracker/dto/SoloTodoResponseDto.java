@@ -1,12 +1,26 @@
 package gpu_tracker.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 public class SoloTodoResponseDto {
-    private List<EntityDto> entities;
+
+
+    private List<ResultDto> results;
+
+    @Data
+    public static class ResultDto {
+        private ProductDto product;
+        private List<EntityDto> entities;
+    }
+    @Data
+    public static class ProductDto {
+        private Long id;
+        private String name;
+    }
 
     @Data
     public static class EntityDto {
@@ -19,5 +33,7 @@ public class SoloTodoResponseDto {
     public static class ActiveRegistryDto {
         private String timestamp;
         private Double offer_price;
+        @JsonProperty("is_available")
+        private boolean is_available;
     }
 }
