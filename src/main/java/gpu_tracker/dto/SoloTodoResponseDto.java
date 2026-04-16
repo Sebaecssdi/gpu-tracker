@@ -36,4 +36,9 @@ public class SoloTodoResponseDto {
         @JsonProperty("is_available")
         private boolean is_available;
     }
+
+    @Data
+    public static class StoreDto {
+        private String name;
+    }
 }

@@ -22,7 +22,7 @@ public class GpuPriceTrackerJob {
     private final SoloTodoScrapperService soloTodoScrapperService;
     private final PriceHistoryRepository priceHistoryRepository;
 
-    @Scheduled(cron = "0 0 3 * * *", zone = "America/Santiago")
+    @Scheduled(cron = "0 55 20 * * *", zone = "America/Santiago")
     public void trackGpuPricesAuto(){
         System.out.println("Starting Gpu Price Tracker Job: " + LocalDateTime.now());
 
@@ -45,7 +45,7 @@ public class GpuPriceTrackerJob {
                     history.setGpu(gpu);
                     history.setPrice(bestOffer.getActive_registry().getOffer_price());
                     history.setFetchDate(LocalDateTime.now());
-                    history.setStore(bestOffer.getStore());
+                    history.setStore(soloTodoScrapperService.translateStoreName(bestOffer.getStore()));
                     priceHistoryRepository.save(history);
                 } else  {
                     System.out.println("No hay stock hoy para: " + gpu.getName());

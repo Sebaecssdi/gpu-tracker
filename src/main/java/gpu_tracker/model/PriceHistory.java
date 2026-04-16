@@ -1,5 +1,6 @@
 package gpu_tracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class PriceHistory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gpu_id")
+    @JsonIgnore
     private Gpu gpu;
 
 }
