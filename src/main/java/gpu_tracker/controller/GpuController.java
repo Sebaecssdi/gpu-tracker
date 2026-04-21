@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/gpus")
@@ -32,6 +33,17 @@ public class GpuController {
     public ResponseEntity<List<Gpu>> findAllGpu(){
         List<Gpu> gpuList = gpuService.findAll();
         return ResponseEntity.ok(gpuList);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Gpu>> searchGpus(@RequestParam("q") String query) {
+        return ResponseEntity.ok(gpuService.searchByName(query));
+    }
+
+    @GetMapping("/by-api-id/{apiId}")
+    public ResponseEntity<Gpu> findByApiId(@PathVariable Long apiId) {
+        Optional<Gpu> gpu = gpuService.findByApiId(apiId);
+        return gpu.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/test-scraping/{apiId}")

@@ -1,6 +1,7 @@
 package gpu_tracker.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class SoloTodoResponseDto {
     public static class ProductDto {
         private Long id;
         private String name;
+        @JsonProperty("picture_url")
+        private String pictureUrl;
+        private JsonNode specs;
     }
 
     @Data

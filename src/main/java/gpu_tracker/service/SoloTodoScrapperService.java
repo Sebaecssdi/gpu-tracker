@@ -1,5 +1,6 @@
 package gpu_tracker.service;
 
+import gpu_tracker.dto.SoloTodoProductDetailsDto;
 import gpu_tracker.dto.SoloTodoResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -50,22 +51,6 @@ public class SoloTodoScrapperService {
 
     }
 
-//    public String translateStoreName(String storeUrl) {
-//        if (storeUrl == null || storeUrl.isEmpty()){
-//            return "Desconocida";
-//        }
-//
-//        String storeId = storeUrl.replaceAll("[^0-9]","");
-//
-//        return switch (storeId){
-//            case "86" -> "SP Digital";
-//            case "34" -> "PC Express";
-//            case "266" -> "NotebookStore";
-//
-//            default -> "Tienda ID: " + storeId;
-//        };
-//
-//    }
 
     public String translateStoreName(String storeUrl) {
         if (storeUrl == null || storeUrl.isEmpty()){
@@ -94,5 +79,35 @@ public class SoloTodoScrapperService {
         }
         return "Store ID: " + storeId;
     }
+
+    public SoloTodoProductDetailsDto fetchGpuDetails(Long apiId) {
+        try {
+            return webClient.get()
+                    .uri("/products/" + apiId + "/")
+                    .retrieve()
+                    .bodyToMono(SoloTodoProductDetailsDto.class)
+                    .block();
+        } catch (Exception e) {
+            System.out.println("Error al obtener detalles técnicos para el ID " + apiId + ": " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Long extractApiIdFromUrl(String url) {
+        if (url == null || url.isEmpty()) return null;
+
+        try {
+            String[] parts = url.split("/products/");
+            if (parts.length > 1) {
+                String idPart = parts[1].split("-")[0];
+                return Long.parseLong(idPart);
+            }
+        } catch (Exception e) {
+            System.out.println("Formato de URL inválido: " + url);
+        }
+        return null;
+    }
+
+
 
 }
