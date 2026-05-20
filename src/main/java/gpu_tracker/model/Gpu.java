@@ -21,6 +21,5 @@ public class Gpu {
     private String chipModel;
     private String memory;
     
-    //test hehe
 
 }
