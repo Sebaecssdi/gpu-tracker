@@ -1,6 +1,6 @@
 # GPU Market Tracker
 
-Real-time GPU price tracker for Chilean and international markets. Built with Java.
+Real-time GPU price tracker for the Chilean market. Built with Java.
 
 ## Tech Stack:
 * **Backend:** Java, Spring Boot, Spring WebFlux (WebClient)
