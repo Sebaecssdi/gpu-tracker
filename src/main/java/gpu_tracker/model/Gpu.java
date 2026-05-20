@@ -20,7 +20,7 @@ public class Gpu {
     private String brand;
     private String chipModel;
     private String memory;
-    //asd123
+
     
 
 }
